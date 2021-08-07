@@ -34,21 +34,26 @@ const generateDate = () => {
   return dayjs().add(daysGap, 'day').toDate();
 };
 
+const generateRepeating = () => {
+  return {
+    mo: false,
+    tu: false,
+    we: Boolean(getRandomInteger(0, 1)),
+    th: false,
+    fr: Boolean(getRandomInteger(0, 1)),
+    sa: false,
+    su: false,
+  };
+};
+
 export const generateTask = () => {
   const dueDate = generateDate();
+  const repeating = generateRepeating();
 
   return {
     description: generateDescription(),
     dueDate,
-    repeateng: {
-      mo: false,
-      tu: false,
-      we: false,
-      th: false,
-      fr: false,
-      sa: false,
-      su: false,
-    },
+    repeating,
     color: 'black',
     isArchive: false,
     isFavorite: false,
