@@ -1,5 +1,22 @@
 import {COLORS} from '../const.js';
-import {isTaskRepeating, humanizeTaskDueDate} from '../utils.js';
+import {isTaskRepeating, humanizeTaskDueDate, createElement} from '../utils.js';
+
+const BLANK_TASK = {
+  color: COLORS[0],
+  description: '',
+  dueDate: null,
+  repeating: {
+    mo: false,
+    tu: false,
+    we: false,
+    th: false,
+    fr: false,
+    sa: false,
+    su: false,
+  },
+  isArchive: false,
+  isFavorite: false,
+};
 
 const createTaskEditDateTemplate = (dueDate) => {
   return ` <button class="card__date-deadline-toggle" type="button">
@@ -58,22 +75,8 @@ const createTaskEditColorsTemplate = (currentColor) => {
   >`).join('');
 };
 
-export const createTaskEditTemplate = (task = {}) => {
-
-  const {
-    color = 'black',
-    description = '',
-    dueDate = null,
-    repeating = {
-      mo: false,
-      tu: false,
-      we: false,
-      th: false,
-      fr: false,
-      sa: false,
-      su: false,
-    },
-  } = task;
+const createTaskEditTemplate = (task) => {
+  const {color, description, dueDate, repeating} = task;
 
   const dateTemplate = createTaskEditDateTemplate(dueDate);
 
@@ -85,7 +88,7 @@ export const createTaskEditTemplate = (task = {}) => {
 
   const colorsTemplate = createTaskEditColorsTemplate(color);
 
-  return ` <article class="card card--edit card--${color} ${repeatingClassName}">
+  return `<article class="card card--edit card--${color} ${repeatingClassName}">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__color-bar">
@@ -129,3 +132,26 @@ export const createTaskEditTemplate = (task = {}) => {
     </form>
   </article>`;
 };
+
+export default class TaskEdit {
+  constructor(task = BLANK_TASK) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

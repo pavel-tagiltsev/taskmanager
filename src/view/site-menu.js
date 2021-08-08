@@ -2,7 +2,7 @@ import {createElement} from '../utils.js';
 
 // Функцию для генерации HTML-разметки можно превратить в метод класса,
 // однако делать мы этого не будем, чтобы не раздувать diff изменений
-export const createSiteMenuTemplate = () => {
+const createSiteMenuTemplate = () => {
   return `<section class="control__btn-wrap">
   <input
     type="radio"
