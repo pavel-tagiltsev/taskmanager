@@ -1,10 +1,6 @@
 import {COLORS} from '../const.js';
 import {isTaskRepeating, humanizeTaskDueDate} from '../utils.js';
 
-const isRepeating = (repeating) => {
-  return Object.values(repeating).some(Boolean);
-};
-
 const createTaskEditDateTemplate = (dueDate) => {
   return ` <button class="card__date-deadline-toggle" type="button">
     date: <span class="card__date-status">${dueDate !== null ? 'yes' : 'no'}</span>
@@ -26,12 +22,12 @@ const createTaskEditDateTemplate = (dueDate) => {
 
 const createTaskEditRepeatingTempate = (repeating) => {
   return `<button class="card__repeat-toggle" type="button">
-    repeat:<span class="card__repeat-status">${isRepeating(repeating) ? 'yes' : 'no'}</span>
+    repeat:<span class="card__repeat-status">${isTaskRepeating(repeating) ? 'yes' : 'no'}</span>
   </button>
 
   ${isTaskRepeating(repeating) ? `<fieldset class="card__repeat-days">
     <div class="card__repeat-days-inner">
-      ${Object.entries(repeating).map((day, repeat) => `<input
+      ${Object.entries(repeating).map(([day, repeat]) => `<input
         class="visually-hidden card__repeat-day-input"
         type="checkbox"
         id="repeat-${day}"
@@ -89,7 +85,7 @@ export const createTaskEditTemplate = (task = {}) => {
 
   const colorsTemplate = createTaskEditColorsTemplate(color);
 
-  return ` <article class="card card--${color} ${repeatingClassName}">
+  return ` <article class="card card--edit card--${color} ${repeatingClassName}">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__color-bar">
