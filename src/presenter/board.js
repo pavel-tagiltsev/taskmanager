@@ -109,6 +109,14 @@ export default class Board {
     });
   }
 
+  _renderTaskList() {
+    this._renderTasks(0, Math.min(this._boardTasks.length, TASK_COUNT_PER_STEP));
+
+    if (this._boardTasks.length > TASK_COUNT_PER_STEP) {
+      this._renderLoadMoreButton();
+    }
+  }
+
   _renderBoard() {
     // Метод для инициализации (начала работы) модуля,
     // бОльшая часть текущей функции renderBoard в main.js
@@ -120,10 +128,6 @@ export default class Board {
 
     this._renderSort();
 
-    this._renderTasks(0, Math.min(this._boardTasks.length, TASK_COUNT_PER_STEP));
-
-    if (this._boardTasks.length > TASK_COUNT_PER_STEP) {
-      this._renderLoadMoreButton();
-    }
+    this._renderTaskList();
   }
 }
