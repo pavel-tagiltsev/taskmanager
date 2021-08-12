@@ -28,4 +28,9 @@ export default class Sort extends AbstractView {
     evt.preventDefault();
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
+
+  setSortTypeChangeHandler(callback) {
+    this._callback.sortTypeChange = callback;
+    this.getElement().addEventListener('click', this._sortTypeChangeHandler);
+  }
 }
